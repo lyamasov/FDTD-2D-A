@@ -1,15 +1,31 @@
 clear all; close all; clc;
 
 % lower left corner = (0, 0)
+
 I = im2double(imread("problem/ant_140x200.png"));
 lambda1 = 200;
-%deembedd = (0.1 + 0.018)*lambda1;
-%xc = (0.1 + 0.1 + 0.027)*lambda1;
 deembedd = (0.1 + 0.653)*lambda1; % de-embedding distance
 xc = (0.1 + 0.1 + 0.426)*lambda1; % phase center x coordinate
 yc = rows(I)/2; % phase center y coordinate
-nc = round(1920/2/2); % number of columns in computation domain
-nr = round(1080/2); % number of rows in computation domain
+nc = round(1920/2/2); % number of columns in the computation domain
+nr = round(1080/2); % number of rows in the computation domain
+
+%I = im2double(imread("problem/ant_350x500.png"));
+%lambda1 = 500;
+%deembedd = (0.1 + 0.653)*lambda1;
+%xc = (0.1 + 0.1 + 0.426)*lambda1;
+%yc = rows(I)/2;
+%nc = round(1920/2);
+%nr = round(1080);
+
+%I = im2double(imread("problem/ant0_100x500.png"));
+%lambda1 = 500;
+%deembedd = (0.1 + 0.018)*lambda1;
+%xc = (0.1 + 0.1 + 0.027)*lambda1;
+%yc = rows(I)/2;
+%nc = round(1920/2);
+%nr = round(1080);
+
 xl = round(xc - nc/2);
 yb = round(yc - nr/2);
 column = @(x) -xl + 1 + (x - 0.5);
@@ -116,12 +132,12 @@ for i = 1 : length(t)
     vE = min(1, sqrt(meany(Ex).^2 + meanx(Ey).^2)/constraint);
     [rH, gH, bH] = ind2rgb(gray2ind(vH, colorN), jet(colorN)); 
     [rE, gE, bE] = ind2rgb(gray2ind(vE, colorN), hot(colorN));
-    rE([pec; circle]) = 0.1;
-    gE([pec; circle]) = 0.1;
-    bE([pec; circle]) = 0.1;
-    rH([pec; circle]) = 0.1;
-    gH([pec; circle]) = 0.1;
-    bH([pec; circle]) = 0.1; 
+    rE([pec; circle]) = 0.25;
+    gE([pec; circle]) = 0.25;
+    bE([pec; circle]) = 0.25;
+    rH([pec; circle]) = 0.25;
+    gH([pec; circle]) = 0.25;
+    bH([pec; circle]) = 0.25; 
     imwrite(cat(3, [rE, rH], [gE, gH], [bE, bH]), ...
       sprintf("%s/t%04d.png", outDir, i));
   endif
@@ -142,7 +158,7 @@ near2far = (
 near2far = [conj(fliplr(near2far)), zeros(modeN + 1, 1), near2far];
 near2far = [near2far; near2far(2 : end, :)];
 
-% Desired directional characteristic
+% Desired directivity characteristic
 goal = sqrt(6)*(cos(2*pi*phi) > 0.5).*cos(3/2*2*pi*phi)*sqrt(dphi);
 
 Ifar = real(Ff'*(Ff*Ic*Ft.*near2far)*Ft');
@@ -224,7 +240,7 @@ for q = [0:5]
   yticks([-20 : 5 : 10])
   xlabel("phi [deg]")
   ylabel("|T| [dBi]")
-  title(sprintf("Directional Characteristic (f/f1 = %.1f)", fq/f1))
+  title(sprintf("Directivity Characteristic (f/f1 = %.1f)", fq/f1))
   grid on
 endfor
 print(sprintf("%s/figure2.pdf", outDir), sprintf("-S%d,%d", figw, figh))
@@ -241,7 +257,7 @@ for q = [0 : 5]
   yticks([-180 : 45 : 180])
   xlabel("phi [deg]")
   ylabel("arg(T) [deg]")
-  title(sprintf("Directional Characteristic (f/f1 = %.1f)", fq/f1))
+  title(sprintf("Directivity Characteristic (f/f1 = %.1f)", fq/f1))
   grid on
 endfor
 print(sprintf("%s/figure3.pdf", outDir), sprintf("-S%d,%d", figw, figh))

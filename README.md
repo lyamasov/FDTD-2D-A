@@ -7,7 +7,7 @@ Features:
 - Far-field calculation both in frequency and time domain
 
 Video:
-https://www.youtube.com/watch?v=DKaTryvcFac
+https://www.youtube.com/watch?v=ZQBiTu06Www
 
 Details about used antennas:
 https://doi.org/10.5281/zenodo.1248232
