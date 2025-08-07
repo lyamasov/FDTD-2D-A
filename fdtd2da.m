@@ -1,3 +1,5 @@
+% See "A perfectly matched layer for the absorption of electromagnetic waves" by Jean-Pierre Berenger
+
 clear all; close all; clc;
 
 % lower left corner = (0, 0)
